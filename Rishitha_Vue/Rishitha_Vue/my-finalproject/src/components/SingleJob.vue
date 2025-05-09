@@ -1,5 +1,10 @@
 <template>
-  <div :class="job.type === 'Full-time' ? 'green' : 'red'">
+  <div
+    :class="[job.type === 'Full-time' ? 'green' : 'red', 'job-card']"
+    @mouseenter="moveCard"
+    @mouseleave="resetCard"
+    ref="card"
+  >
     <img :src="job.image" alt="Company Logo" class="company-logo" />
     <h3><strong>{{ job.name }}</strong></h3>
     <h4>Company: {{ job.company }}</h4>
@@ -17,6 +22,17 @@ export default {
   name: 'SingleJob',
   props: {
     job: Object
+  },
+  methods: {
+    moveCard() {
+      const card = this.$refs.card;
+      card.style.transition = 'transform 0.3s ease';
+      card.style.transform = 'translateY(-10px)';
+    },
+    resetCard() {
+      const card = this.$refs.card;
+      card.style.transform = 'translateY(0)';
+    }
   }
 };
 </script>
@@ -32,7 +48,7 @@ export default {
   color: white;
 }
 
-div {
+.job-card {
   padding: 1em;
   margin-bottom: 1em;
   width: 90%;
@@ -47,12 +63,12 @@ div {
   margin-bottom: 10px;
 }
 
-h3{
+h3 {
   font-size: 20px;
   margin-bottom: 0.5em;
 }
 
-h4{
+h4 {
   margin-bottom: 0.1em;
 }
 
@@ -73,6 +89,7 @@ h4{
   color: #2196f3;
   border: 1px solid #2196f3;
 }
+
 @media screen and (max-width: 768px) {
   .job-container {
     padding: 1em;
@@ -98,7 +115,6 @@ h4{
   }
 }
 
-
 @media screen and (max-width: 500px) {
   .job-container {
     padding: 0.75em;
@@ -117,6 +133,5 @@ h4{
     width: 80px;
     height: 40px;
   }
-
 }
 </style>
